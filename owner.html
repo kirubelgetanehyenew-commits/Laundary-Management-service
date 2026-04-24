@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <title>Owner</title>
+      <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="protectPage('owner'); loadOrders();">
+
+      <div class="container">
+            <h2>All Orders</h2>
+
+            <ul id="orders"></ul>
+
+            <button onclick="loadOrders()">Refresh</button>
+            <button onclick="logout()">Logout</button>
+      </div>
+
+      <script src="script.js"></script>
+</body>
+
+</html>
