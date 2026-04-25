@@ -19,15 +19,16 @@ body {
   border-radius: 60px;
   width: 400px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
   margin-bottom: 15px;
 }
 
-input, select {
-  width: 100%;
+input,
+select {
+  width: 70%;
   padding: 12px;
   margin: 10px 0;
   border-radius: 10px;
@@ -67,4 +68,9 @@ li {
   padding: 10px;
   margin: 8px 0;
   border-radius: 10px;
+}
+
+button:hover {
+  transition: 5s;
+  background-color: black;
 }
