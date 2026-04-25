@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-      <title>Customer</title>
-      <link rel="stylesheet" href="style.css">
+  <title>Customer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body onload="protectPage('customer')">
 
-      <div class="container">
-            <h2>Place Order</h2>
+<div class="container">
+  <h2>🧺 Customer Dashboard</h2>
 
-            <input type="text" id="name" placeholder="Your Name">
+  <p style="font-size:14px; color:gray;">Place your laundry order</p>
 
-            <select id="service">
-                  <option>Wash</option>
-                  <option>Dry</option>
-                  <option>Iron</option>
-            </select>
+  <input type="text" id="name" placeholder="Your Name">
 
-            <input type="number" id="quantity" placeholder="Clothes Count">
+  <select id="service">
+    <option>Wash</option>
+    <option>Dry</option>
+    <option>Iron</option>
+  </select>
 
-            <button onclick="placeOrder()">Submit</button>
+  <input type="number" id="quantity" placeholder="Clothes Count">
 
-            <button onclick="logout()">Logout</button>
+  <button onclick="placeOrder()">Submit Order</button>
 
-            <p id="message"></p>
-      </div>
+  <button onclick="logout()">Logout</button>
 
-      <script src="script.js"></script>
+  <p id="message"></p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
