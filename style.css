@@ -2,76 +2,117 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-
-}
-
-body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: Arial;
 }
 
 .container {
-  background: #c296ba;
-  padding: 30px;
-  border-radius: 60px;
-  width: 400px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  height: 100vh;
 }
 
-h2 {
-  margin-bottom: 15px;
+.left {
+  flex: 1;
+  background: linear-gradient(to right, #003366, #0059b3);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
 }
 
-input,
-select {
-  width: 70%;
-  padding: 12px;
-  margin: 10px 0;
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f9;
+}
+
+.card {
+  width: 350px;
+  background: white;
+  padding: 25px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(to right, #667eea, #764ba2);
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:disabled {
-  opacity: 0.6;
-}
-
-a {
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #667eea;
-  text-decoration: none;
-}
-
-ul {
-  list-style: none;
-  margin-top: 15px;
-}
-
-li {
-  background: #f5f5f5;
   padding: 10px;
-  margin: 8px 0;
-  border-radius: 10px;
+  background: #0059b3;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-button:hover {
-  transition: 5s;
-  background-color: black;
+.switch {
+  margin-top: 10px;
+  cursor: pointer;
+  color: blue;
+
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .left {
+    flex: 1;
+    background: #003366;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+  }
+
+  .card {
+    width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #0059b3;
+    color: white;
+    border: none;
+  }
+
+  .order {
+    background: #eee;
+    margin: 5px 0;
+    padding: 8px;
+  }
+}
+
+.dashboard {
+  text-align: center;
 }
