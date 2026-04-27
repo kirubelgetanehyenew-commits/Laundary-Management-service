@@ -1,8 +1,7 @@
-import { useState } from "react";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Admin from "./pages/Admin";
+import Login from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
+import Admin from "./Admin";
 
 function App() {
   const [page, setPage] = useState("login");
