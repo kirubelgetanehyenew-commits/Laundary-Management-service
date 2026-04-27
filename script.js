@@ -1,29 +1,31 @@
 const { useState } = React;
 
 function App() {
-
   const [page, setPage] = useState("home");
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState("");
 
-  const [form, setForm] = useState({
+  const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: ""
   });
 
-  const [login, setLogin] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   });
 
-  const [order, setOrder] = useState({
-    service: "",
+  const [orderData, setOrderData] = useState({
+    service: "Wash",
     clothes: ""
   });
 
-  const [message, setMessage] = useState("");
-
-  const admin = { email: "admin", password: "1234" };
+  // ADMIN ACCOUNT
+  const admin = {
+    email: "admin",
+    password: "1234"
+  };
 
   // HANDLE INPUT
   const handleChange = (e, setter, data) => {
@@ -34,30 +36,53 @@ function App() {
   };
 
   // REGISTER
-  const register = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify(form));
-    setMessage("Registered! Login now");
-    setPage("login");
+
+    if (!registerData.name || !registerData.email || !registerData.password) {
+      setMessage("Fill all fields");
+      return;
+    }
+
+    localStorage.setItem("user", JSON.stringify(registerData));
+
+    setMessage("Registered! Please login");
+    setRegisterData({ name: "", email: "", password: "" });
+    setPage("customerLogin");
   };
 
-  // LOGIN
-  const loginUser = (e) => {
+  // CUSTOMER LOGIN
+  const handleCustomerLogin = (e) => {
     e.preventDefault();
 
     const saved = JSON.parse(localStorage.getItem("user"));
 
-    if (login.email === admin.email && login.password === admin.password) {
-      setPage("admin");
-    } else if (
+    if (
       saved &&
-      saved.email === login.email &&
-      saved.password === login.password
+      saved.email === loginData.email &&
+      saved.password === loginData.password
     ) {
       setUser(saved);
+      setMessage("");
+      setLoginData({ email: "", password: "" });
       setPage("dashboard");
     } else {
-      setMessage("Wrong login");
+      setMessage("Invalid credentials");
+    }
+  };
+
+  // ADMIN LOGIN
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+
+    if (
+      loginData.email === admin.email &&
+      loginData.password === admin.password
+    ) {
+      setPage("adminDashboard");
+      setMessage("");
+    } else {
+      setMessage("Wrong admin login");
     }
   };
 
@@ -68,13 +93,25 @@ function App() {
     let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
     orders.push({
-      ...order,
-      user: user.name
+      user: user.name,
+      service: orderData.service,
+      clothes: orderData.clothes
     });
 
     localStorage.setItem("orders", JSON.stringify(orders));
 
     setMessage("Order placed!");
+    setOrderData({ service: "Wash", clothes: "" });
+  };
+
+  // DELETE ORDER (ADMIN)
+  const deleteOrder = (index) => {
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    orders.splice(index, 1);
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+    window.location.reload();
   };
 
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -92,63 +129,92 @@ function App() {
           {/* HOME */}
           {page === "home" && (
             <>
-              <button onClick={() => setPage("register")}>Register</button>
-              <button onClick={() => setPage("login")}>Login</button>
+              <h3>Welcome</h3>
+              <button onClick={() => setPage("register")}>Customer Register</button>
+              <button onClick={() => setPage("customerLogin")}>Customer Login</button>
+              <button onClick={() => setPage("adminLogin")}>Admin Login</button>
             </>
           )}
 
           {/* REGISTER */}
           {page === "register" && (
             <>
-              <form onSubmit={register}>
-                <input name="name" placeholder="Name" onChange={(e) => handleChange(e, setForm, form)} />
-                <input name="email" placeholder="Email" onChange={(e) => handleChange(e, setForm, form)} />
-                <input name="password" type="password" placeholder="Password" onChange={(e) => handleChange(e, setForm, form)} />
+              <h3>Register</h3>
+              <form onSubmit={handleRegister}>
+                <input name="name" placeholder="Name" value={registerData.name} onChange={(e)=>handleChange(e,setRegisterData,registerData)} />
+                <input name="email" placeholder="Email" value={registerData.email} onChange={(e)=>handleChange(e,setRegisterData,registerData)} />
+                <input name="password" type="password" placeholder="Password" value={registerData.password} onChange={(e)=>handleChange(e,setRegisterData,registerData)} />
                 <button>Register</button>
               </form>
+              <p className="switch" onClick={() => setPage("home")}>Back</p>
+              <p className="message">{message}</p>
             </>
           )}
 
-          {/* LOGIN */}
-          {page === "login" && (
+          {/* CUSTOMER LOGIN */}
+          {page === "customerLogin" && (
             <>
-              <form onSubmit={loginUser}>
-                <input name="email" placeholder="Email" onChange={(e) => handleChange(e, setLogin, login)} />
-                <input name="password" type="password" placeholder="Password" onChange={(e) => handleChange(e, setLogin, login)} />
+              <h3>Customer Login</h3>
+              <form onSubmit={handleCustomerLogin}>
+                <input name="email" placeholder="Email" value={loginData.email} onChange={(e)=>handleChange(e,setLoginData,loginData)} />
+                <input name="password" type="password" placeholder="Password" value={loginData.password} onChange={(e)=>handleChange(e,setLoginData,loginData)} />
                 <button>Login</button>
               </form>
-              <p>{message}</p>
+              <p className="switch" onClick={() => setPage("home")}>Back</p>
+              <p className="message">{message}</p>
+            </>
+          )}
+
+          {/* ADMIN LOGIN */}
+          {page === "adminLogin" && (
+            <>
+              <h3>Admin Login</h3>
+              <form onSubmit={handleAdminLogin}>
+                <input name="email" placeholder="Admin Email" value={loginData.email} onChange={(e)=>handleChange(e,setLoginData,loginData)} />
+                <input name="password" type="password" placeholder="Password" value={loginData.password} onChange={(e)=>handleChange(e,setLoginData,loginData)} />
+                <button>Login</button>
+              </form>
+              <p className="switch" onClick={() => setPage("home")}>Back</p>
+              <p className="message">{message}</p>
             </>
           )}
 
           {/* CUSTOMER DASHBOARD */}
-          {page === "dashboard" && (
+          {page === "dashboard" && user && (
             <>
               <h3>Welcome {user.name}</h3>
 
               <form onSubmit={placeOrder}>
-                <select name="service" onChange={(e) => handleChange(e, setOrder, order)}>
+                <select name="service" value={orderData.service} onChange={(e)=>handleChange(e,setOrderData,orderData)}>
                   <option>Wash</option>
                   <option>Dry Clean</option>
                 </select>
 
-                <input name="clothes" placeholder="Number of clothes" onChange={(e) => handleChange(e, setOrder, order)} />
+                <input name="clothes" placeholder="Number of clothes" value={orderData.clothes} onChange={(e)=>handleChange(e,setOrderData,orderData)} />
                 <button>Place Order</button>
               </form>
-              <p>{message}</p>
+
+              <p className="message">{message}</p>
+
+              <button onClick={() => setPage("home")}>Logout</button>
             </>
           )}
 
           {/* ADMIN DASHBOARD */}
-          {page === "admin" && (
+          {page === "adminDashboard" && (
             <>
               <h3>Admin Dashboard</h3>
+
+              {orders.length === 0 && <p>No orders yet</p>}
 
               {orders.map((o, i) => (
                 <div key={i} className="order">
                   {o.user} - {o.service} ({o.clothes})
+                  <button onClick={() => deleteOrder(i)}>Delete</button>
                 </div>
               ))}
+
+              <button onClick={() => setPage("home")}>Logout</button>
             </>
           )}
 
